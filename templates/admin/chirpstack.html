@@ -92,67 +92,22 @@
   </head>
 
   <body>
-    <!-- <div class="header">
-      <div class="flex-row-header">
-        <div class="flex-col-header">
-          <h2>AquaGauge</h2>
-        </div>
-        <div class="flex-col-header">
-          <img class="logo" src="{% static 'home/images/icfoss_logo.png' %}" />
-        </div>
-        <div class="flex-col-header">
-          <img class="logo" src="{% static 'home/images/lorawan.png' %}" />
-        </div>
-      </div>
-    </div> -->
+
 
     <div class="form">
       <form method="post" action="">
-        <h2>Register</h2>
+        <h2>Chirpstack Configuration</h2>
         <br /><br />
         {% csrf_token %}
-        <!-- Add the rest of the form fields -->
-        <label for="id_name">Name:</label>
-        {{ form.name }} {% if form.name.errors %}
-        <ul class="errorlist">
-          {% for error in form.name.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        <label for="id_type">Type:</label>
-        {{ form.type }} {% if form.name.errors %}
-        <ul class="errorlist">
-          {% for error in form.type.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        <label for="id_address">Address:</label>
-        {{ form.address }}
-        <label for="id_phone_number">Phone number:</label>
-        {{ form.phone_number }}
-        <label for="id_email">Email:</label>
-        {{ form.email }}
-        <label for="id_website">Website:</label>
-        {{ form.website }}
-        <label for="id_country">Country:</label>
-        {{ form.country }}
-        <label for="id_state_province">State/Province:</label>
-        {{ form.state_province }}
-        <label for="id_city">City:</label>
-        {{ form.city }}
-        <label for="id_district">District:</label>
-        {{ form.district }}
-        <!-- Add the username and password fields -->
-        <label for="id_username">Username:</label>
-        {{ form.username }}
-        <label for="id_password">Password:</label>
-        {{ form.password }}
+          <label for="">URL</label>
+          <input type="text" name="chirp_url" value="{{chirpstack_config.server_url}}" required>
+          <label for="">UserName</label>
+          <input type="text" name="chirp_user" value="{{chirpstack_config.user_name}}" required>
+          <label for="">Password</label>
+          <input type="password" name="chirp_pass" value="" required>
         <button type="submit">Submit</button>
 
-        <!-- <a href="/manage/login">Already have an account? Login instead.</a> -->
-      </form>
+    </form>
     </div>
 
 
