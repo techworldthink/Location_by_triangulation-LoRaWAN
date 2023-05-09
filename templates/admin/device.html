@@ -93,15 +93,13 @@
 
   <div class="form">
     <form method="post" action="">
-      <h2>Chirpstack Configuration</h2>
+      <h2>Add Device</h2>
       <br /><br />
       {% csrf_token %}
-      <label for="">URL</label>
-      <input type="text" name="chirp_url" value="{{chirpstack_config.server_url}}" required>
-      <label for="">UserName</label>
-      <input type="text" name="chirp_user" value="{{chirpstack_config.user_name}}" required>
-      <label for="">Password</label>
-      <input type="password" name="chirp_pass" value="" required>
+      <label for="">Bus name</label>
+      <input type="text" name="bus_name" value="{{chirpstack_config.server_url}}" required>
+      <label for="">Device EUI</label>
+      <input type="text" name="deveui" value="{{chirpstack_config.user_name}}" required>
       <button type="submit">Submit</button>
 
     </form>

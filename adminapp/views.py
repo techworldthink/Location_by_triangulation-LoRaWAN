@@ -1,14 +1,25 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
-from .models import Chirpstack
 from django .contrib import messages
+from django.http import JsonResponse
+
+from .models import Chirpstack
+from .models import DeviceEui
+from .models import BusStops
+
+
 
 @login_required()
 @user_passes_test(lambda u: u.is_superuser)
 def home(request):
     return render(request,"admin/home.html")
 
+
+@login_required()
+@user_passes_test(lambda u: u.is_superuser)
+def dashboard(request):
+    return render(request,"admin/dashboard.html")
 
 @login_required()
 @user_passes_test(lambda u: u.is_superuser)
@@ -30,3 +41,28 @@ def chirpstack(request):
     }
 
     return render(request, "admin/chirpstack.html", context)
+
+
+@login_required()
+@user_passes_test(lambda u: u.is_superuser)
+def device(request):
+    if request.method == 'POST':
+        chirpstack_config = DeviceEui.objects.create(
+            bus_name=request.POST.get('bus_name'),
+            device_eui=request.POST.get('deveui'),
+        )
+        messages.success(request, "Device added")
+
+    return render(request, "admin/device.html")
+
+@login_required()
+@user_passes_test(lambda u: u.is_superuser)
+def bus_stops(request):
+    if request.method == 'POST':
+        stop_name = BusStops.objects.create(
+            stop_name=request.POST.get('stop_name'),
+            latitude=request.POST.get('lat'),
+            longitude=request.POST.get('lon'),
+        )
+        return JsonResponse({'status':'ok'})
+    return render(request, "admin/bus_stops.html")
