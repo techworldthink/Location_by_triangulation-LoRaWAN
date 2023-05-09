@@ -1,0 +1,201 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .main {
+            padding: 0.75em;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header {
+            width: 95%;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+
+        .flex-col-header {
+            flex: 32%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            justify-content: center;
+            margin: 0.5em;
+        }
+
+        .col-left {
+            flex: 50%;
+            background-color: #efefef;
+            color: #6a6a6a;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+            align-self: center;
+        }
+
+        .col-right {
+            flex: 50%;
+            color: rgb(40 37 37);
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+            font-size: 32px;
+        }
+
+        .box-shadow {
+            box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 19%);
+        }
+
+
+        .body-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .body-col {
+            flex: 50%;
+        }
+
+        @media screen and (max-width: 641px) {
+            .flex-row {
+                flex-direction: column;
+            }
+
+            .body-row {
+                flex-direction: column;
+            }
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="header">
+            <div class="flex-row">
+
+                <div class="flex-col-header box-shadow">
+                    <div class="col-left">
+                        <h3><i class="fa fa-user" aria-hidden="true"></i> Users</h3>
+                    </div>
+                    <div class="col-right">{{users}}</div>
+                </div>
+                <div class="flex-col-header box-shadow">
+                    <div class="col-left">
+                        <h3><i class="fa fa-building-o" aria-hidden="true"></i> Schools</h3>
+                    </div>
+                    <div class="col-right">{{schools}}</div>
+                </div>
+                <div class="flex-col-header box-shadow">
+                    <div class="col-left">
+                        <h3><i class="fa fa-map-marker" aria-hidden="true"></i> Wells</h3>
+                    </div>
+                    <div class="col-right">{{wells}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="body">
+            <br><br>
+            <div class="body-row">
+                <div class="body-col">
+                    <canvas id="authorized_access_graph" style="width: 100%; max-width: 600px"></canvas>
+                </div>
+                <div class="body-col">
+                    <canvas id="unauthorized_access_graph" style="width: 100%; max-width: 600px"></canvas>
+                </div>
+            </div>
+
+
+
+            <script>
+                let plotData_ = JSON.parse("{{graph_authorized|escapejs}}");
+                new Chart("authorized_access_graph", {
+                    type: "scatter",
+                    data: {
+                        datasets: [{
+                            pointRadius: 4,
+                            pointBackgroundColor: "rgb(0,0,255)",
+                            data: plotData_
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        scales: {
+                            xAxes: [{ ticks: { min: 0, max: 12 } }],
+                            yAxes: [{ ticks: { min: 0, max: 1000 } }],
+                        },
+                        title: {
+                            display: true,
+                            text: 'API - Authorized requests'
+                        }
+                    }
+                });
+            </script>
+
+            <script>
+                let plotData = JSON.parse("{{graph_unauthorized|escapejs}}");
+                console.log(plotData);
+                new Chart("unauthorized_access_graph", {
+                    type: "scatter",
+                    data: {
+                        datasets: [{
+                            pointRadius: 4,
+                            pointBackgroundColor: "rgb(0,0,255)",
+                            data: plotData
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        scales: {
+                            xAxes: [{ ticks: { min: 0, max: 12 } }],
+                            yAxes: [{ ticks: { min: 0, max: 1000 } }],
+                        },
+                        title: {
+                            display: true,
+                            text: 'API - Unauthorized requests'
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <!--SNACKBAR MESAGE-->
+    <link href="{% static 'common/css/snackbar.css' %}" type="text/css" rel="stylesheet" />
+    <div id="snackbar"></div>
+    <script src="{% static 'common/js/snackbar.js' %}"></script>
+
+    {% for message in messages %}
+    <script>
+        showSnackBar("{{ message }}");
+    </script>
+    {% endfor %}
+</body>
+
+</html>

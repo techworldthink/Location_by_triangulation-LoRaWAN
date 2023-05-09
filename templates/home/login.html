@@ -1,0 +1,60 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'home/css/login.css' %}" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <section>
+        <div class="imgBx">
+            <img src="{% static 'home/images/body-bg.jpg' %}">
+            <h1>TriLocate</h1>
+            <p>LoRaWAN Triangulation</p>
+            <a class="home-btn" href="/" class="login-btn">Home</a>
+        </div>
+        <div class="contentBx">
+            <div class="formBx">
+                <h2>Login</h2>
+                <form action="/manage/login" method="POST">
+                    {% csrf_token %}
+                    <div class="inputBx">
+                        <span>Username</span>
+                        <input type="text" name="uname" required>
+                    </div>
+                    <div class="inputBx">
+                        <span>Password</span>
+                        <input type="password" name="pass" required>
+                    </div>
+                    <div class="remember">
+                        <label>
+                            <input type="checkbox" name=""> Remember
+                        </label>
+                    </div>
+                    <div class="inputBx">
+                        <input type="submit" value="Sign in" name="">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!--SNACKBAR MESAGE-->
+    <link href="{% static 'common/css/snackbar.css' %}" type="text/css" rel="stylesheet">
+    <div id="snackbar"></div>
+    <script src="{% static 'common/js/snackbar.js' %}"></script>
+
+
+    {% for message in messages %}
+    <script>showSnackBar("{{ message }}");</script>
+    {% endfor %}
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Schools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="{% static 'common/css/box.css' %}" type="text/css" rel="stylesheet">
+  <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <style>
+    .main {
+      margin: 10px;
+    }
+
+    .table {
+      overflow-x: scroll;
+      padding: 7px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 16px;
+      text-align: left;
+      margin: auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #e5e5e5;
+      white-space: nowrap;
+      font-family: sans-serif;
+      font-size: .9em;
+    }
+
+    th {
+      background-color: #efefef;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #efefef;
+    }
+
+    @media screen and (max-width: 600px) {
+      table {
+        font-size: 14px;
+      }
+    }
+
+    h2,
+    h1,
+    p {
+      font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+    h2 {
+      color: #5c5959;
+      text-transform: uppercase;
+      font-family: monospace;
+    }
+
+    .delete-btn {
+      text-decoration: none;
+      color: red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="table box-shadow">
+      <h2>Schools</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th style="white-space: normal">Address</th>
+            <th>Phone number</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>Country</th>
+            <th>State/Province</th>
+            <th>City</th>
+            <th>District</th>
+            <th>Username</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for each in schools %}
+          <tr>
+            <td>{{each.name}}</td>
+            <td>{{each.type}}</td>
+            <td>{{each.address}}</td>
+            <td>{{each.phone_number}}</td>
+            <td>{{each.email}}</td>
+            <td>{{each.website}}</td>
+            <td>{{each.country}}</td>
+            <td>{{each.state_province}}</td>
+            <td>{{each.city}}</td>
+            <td>{{each.district}}</td>
+            <td>{{each.user.username}}</td>
+            <td><a class="delete-btn" href="school/delete/{{each.id}}"><i class="fa fa-trash"
+                  aria-hidden="true"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--SNACKBAR MESAGE-->
+  <link href="{% static 'common/css/snackbar.css' %}" type="text/css" rel="stylesheet">
+  <div id="snackbar"></div>
+  <script src="{% static 'common/js/snackbar.js' %}"></script>
+
+
+  {% for message in messages %}
+  <script>showSnackBar("{{ message }}");</script>
+  {% endfor %}
+
+
+</body>
+
+</html>

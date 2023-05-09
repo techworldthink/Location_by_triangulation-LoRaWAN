@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Form</title>
+    <link
+      href="{% static 'home/css/index.css' %}"
+      type="text/css"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Add some basic styling */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+
+      form {
+        background-color: #ffffff9e;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 90%;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        color: gray;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="url"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+
+      button[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+
+      a {
+        text-decoration: none;
+        color: gray;
+        cursor: pointer;
+        display: block;
+        margin-top: 0.5em;
+      }
+
+      .form {
+        padding-top: 1em;
+        padding-bottom: 1em;
+      }
+
+      h2 {
+        color: #5c5959;
+        text-transform: uppercase;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <div class="header">
+      <div class="flex-row-header">
+        <div class="flex-col-header">
+          <h2>AquaGauge</h2>
+        </div>
+        <div class="flex-col-header">
+          <img class="logo" src="{% static 'home/images/icfoss_logo.png' %}" />
+        </div>
+        <div class="flex-col-header">
+          <img class="logo" src="{% static 'home/images/lorawan.png' %}" />
+        </div>
+      </div>
+    </div> -->
+
+    <div class="form">
+      <form method="post" action="">
+        <h2>Register</h2>
+        <br /><br />
+        {% csrf_token %}
+        <!-- Add the rest of the form fields -->
+        <label for="id_name">Name:</label>
+        {{ form.name }} {% if form.name.errors %}
+        <ul class="errorlist">
+          {% for error in form.name.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_type">Type:</label>
+        {{ form.type }} {% if form.name.errors %}
+        <ul class="errorlist">
+          {% for error in form.type.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_address">Address:</label>
+        {{ form.address }}
+        <label for="id_phone_number">Phone number:</label>
+        {{ form.phone_number }}
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+        <label for="id_website">Website:</label>
+        {{ form.website }}
+        <label for="id_country">Country:</label>
+        {{ form.country }}
+        <label for="id_state_province">State/Province:</label>
+        {{ form.state_province }}
+        <label for="id_city">City:</label>
+        {{ form.city }}
+        <label for="id_district">District:</label>
+        {{ form.district }}
+        <!-- Add the username and password fields -->
+        <label for="id_username">Username:</label>
+        {{ form.username }}
+        <label for="id_password">Password:</label>
+        {{ form.password }}
+        <button type="submit">Submit</button>
+
+        <!-- <a href="/manage/login">Already have an account? Login instead.</a> -->
+      </form>
+    </div>
+
+
+
+    <!--SNACKBAR MESAGE-->
+    <link
+      href="{% static 'common/css/snackbar.css' %}"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <div id="snackbar"></div>
+    <script src="{% static 'common/js/snackbar.js' %}"></script>
+
+    {% for message in messages %}
+    <script>
+      showSnackBar("{{ message }}");
+    </script>
+    {% endfor %}
+  </body>
+</html>

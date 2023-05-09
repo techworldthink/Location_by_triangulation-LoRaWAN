@@ -1,0 +1,16 @@
+table{
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+thead{
+    /* background-color: #0000000f; */
+}
+
+th,td{
+    padding-top: 15px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #ebebeb;
+    text-align: left;
+}

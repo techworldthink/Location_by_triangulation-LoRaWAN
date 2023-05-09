@@ -1,0 +1,44 @@
+.box-shadow{
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+}
+.main {
+    margin: 1em;
+}
+
+form {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+input,select {
+    width: 95%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #8080804d;
+    border-radius: 5px;
+    outline: none;
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    max-width: 120px;
+    margin-top: 1em;
+}
+
+label {
+    margin-top: 1em;
+    color: #404040;
+}
+
+h2{
+    color: #5c5959;
+    text-transform: uppercase;
+    font-family: monospace;
+}

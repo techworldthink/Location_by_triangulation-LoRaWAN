@@ -1,0 +1,94 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{% static 'common/css/box.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'admin/css/table.css' %}" type="text/css" rel="stylesheet">
+    <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        .table {
+            overflow-x: scroll;
+            padding: 1em;
+        }
+
+        h2 {
+            /* margin-left: 1em; */
+        }
+
+        .delete-btn {
+            text-decoration: none;
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="box">
+            <form action="" class="box-shadow" method="POST">
+                {% csrf_token %}
+                <h2>Add Well</h2>
+                <label for="">School</label>
+                <select name="user" id="">
+                    {% for each in schools %}
+                    <option value="{{each.id}}">{{each.name}}</option>
+                    {% endfor %}
+                </select>
+                <label for="">Label</label>
+                <input type="text" name="label" required>
+                <label for="">Depth</label>
+                <input type="number" name="depth" step="0.01" required>
+                <input type="submit" value="Add">
+            </form>
+        </div>
+        <div class="box box-shadow">
+            <br>
+            <div class="table">
+                <h2>Wells</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>School</th>
+                            <th>Label</th>
+                            <th>Depth (Feet)</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for each in wells %}
+                        <tr>
+                            <td>{{each.school.name}}</td>
+                            <td>{{each.label}}</td>
+                            <td>{{each.depth}}</td>
+                            <td><a class="delete-btn" href="well/delete/{{each.id}}"><i class="fa fa-trash"
+                                        aria-hidden="true"></i></a< /td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <!--SNACKBAR MESAGE-->
+    <link href="{% static 'common/css/snackbar.css' %}" type="text/css" rel="stylesheet">
+    <div id="snackbar"></div>
+    <script src="{% static 'common/js/snackbar.js' %}"></script>
+
+
+    {% for message in messages %}
+    <script>showSnackBar("{{ message }}");</script>
+    {% endfor %}
+
+
+</body>
+
+</html>

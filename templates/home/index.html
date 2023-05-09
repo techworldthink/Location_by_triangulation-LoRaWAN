@@ -1,0 +1,77 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aqua Gauge</title>
+    <link href="{% static 'home/css/index.css' %}" type="text/css" rel="stylesheet">
+    <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+<style>
+    .body {
+        background: url("{% static 'home/images/body-bg.jpg' %}");
+        background-size: cover;
+    }
+    .a-view{
+        text-decoration: none;
+    color: #666666;
+    font-family: sans-serif;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <div class="header">
+            <div class="flex-row-header">
+                <div class="flex-col-header">
+                    <h2>AquaGauge</h2>
+                </div>
+                <div class="flex-col-header">
+                    <img class="logo" src="{% static 'home/images/icfoss_logo.png' %}" />
+                </div>
+                <div class="flex-col-header">
+                    <a href="/login" class="a-view"><h3><i class="fa fa-sign-in" aria-hidden="true"></i> Login</h3></a>
+                    <!-- <img class="logo" src="{% static 'home/images/lorawan.png' %}" /> -->
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="body-content">
+                <h1>LoRaWAN Triangulation</h1>
+                <h2>TriLocate</h2>
+                <p>Service for device location triangulation</p>
+                <a href="/graphs/" class="login-btn">View Data</a>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="flex-row-footer">
+                <div class="flex-col-footer"></div>
+                <div class="flex-col-footer">
+                    <p>
+                        Developed CDOH <br />
+                        International Centre for Free and Open Source Software
+                      </p>
+                </div>
+                <div class="flex-col-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--SNACKBAR MESAGE-->
+    <link href="{% static 'common/css/snackbar.css' %}" type="text/css" rel="stylesheet">
+    <div id="snackbar"></div>
+    <script src="{% static 'common/js/snackbar.js' %}"></script>
+
+
+    {% for message in messages %}
+    <script>showSnackBar("{{ message }}");</script>
+    {% endfor %}
+
+
+</body>
+
+</html>
