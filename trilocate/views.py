@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django .contrib.auth.models import User,auth
 from django.conf import settings
+from shedulerapp.tasks import activate_live_frame_analysis
 
 
 def index(request):
+    activate_live_frame_analysis()
     return render(request,"home/index.html") 
 
 def login(request):
