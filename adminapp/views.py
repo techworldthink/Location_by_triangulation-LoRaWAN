@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django .contrib import messages
 from django.http import JsonResponse
+import json
 
 from .models import Chirpstack
 from .models import DeviceEui
@@ -65,4 +66,7 @@ def bus_stops(request):
             longitude=request.POST.get('lon'),
         )
         return JsonResponse({'status':'ok'})
-    return render(request, "admin/bus_stops.html")
+    context = {
+        'stops' : json.dumps(list(BusStops.objects.filter().values()), indent=4, sort_keys=True, default=str)
+    }
+    return render(request, "admin/bus_stops.html",context)

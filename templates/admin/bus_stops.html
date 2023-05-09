@@ -10,18 +10,26 @@
         #map {
             height: 400px;
         }
+
+        h2 {
+            color: #5c5959;
+            text-transform: uppercase;
+            font-family: monospace;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Bus Stops</h1>
+    <h2>Bus Stops</h2>
     <div id="map"></div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- JQuery -->
     <script src="{% static 'common/js/jquery-3.6.4.min.js' %}"></script>
 
     <script>
+        let plotData_ = JSON.parse("{{stops|escapejs}}");
         // Create a Leaflet map instance
         var map = L.map('map').setView([8.57055, 76.88478], 9);
 
@@ -31,28 +39,20 @@
             maxZoom: 18,
         }).addTo(map);
 
-        // // Add bus stops markers to the map
-        // {% for bus_stop in bus_stops %}
-        //     var marker = L.marker([{{ bus_stop.latitude }}, {{ bus_stop.longitude }}]).addTo(map);
-        //     marker.bindPopup('{{ bus_stop.stop_name }}');
-        // {% endfor %}
 
-        var marker = L.marker([8.57055, 76.88478]).addTo(map);
-        marker.bindPopup('Entry');
+        for (let i = 0; i < plotData_.length; i++) {
+            var marker = L.marker([plotData_[i]['latitude'], plotData_[i]['longitude']]).addTo(map);
+            marker.bindPopup(plotData_[i]['stop_name']);
+        }
+
 
         function onMapClick(e) {
             if (marker) {
                 //map.removeLayer(marker);
             }
-
             marker = L.marker(e.latlng,).addTo(map);
             var latitude = e.latlng.lat;
             var longitude = e.latlng.lng;
-
-            // Log the coordinates to the console
-            console.log("Latitude: " + latitude);
-            console.log("Longitude: " + longitude);
-
             var status = confirm("Add this location?");
             console.log(status);
             if (status == false) {
@@ -62,7 +62,6 @@
                 $.addBusStops(latitude, longitude, name_);
             }
         }
-
         map.on('click', onMapClick);
 
 
