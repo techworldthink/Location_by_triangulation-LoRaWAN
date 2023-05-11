@@ -72,11 +72,8 @@ section .imgBx::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #3b3b3b50;
-  /* background: linear-gradient(225deg, #1da8a8, #333335);
-  background: linear-gradient(225deg, #e91e63, #03a9f4); */
+  background-color: #00000096;
   z-index: 1;
-  /* mix-blend-mode: screen; */
 }
 
 section .imgBx img {

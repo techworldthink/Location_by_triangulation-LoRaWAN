@@ -21,6 +21,7 @@ urlpatterns = [
     path('',views.index,name='index'),
     path('login',views.login,name='login'),
     path('logout',views.logout,name='logout'),
+    path('live_map',views.live_map,name='live_map'),
     path('admin/', include('adminapp.urls')),
 #     path('admin/', admin.site.urls),
 ]

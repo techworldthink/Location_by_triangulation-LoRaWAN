@@ -48,7 +48,7 @@
 }
 
 .body-content {
-    background-color: #00000096;
+    background-color: #0e0d0d24;
     height: 100%;
     color: white;
     display: flex;
@@ -81,4 +81,9 @@ p {
 .flex-col-footer {
     /* flex: 30%; */
     align-self: center;
+}
+.a-view{
+    text-decoration: none;
+color: #666666;
+font-family: sans-serif;
 }

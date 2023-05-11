@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Live Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+    <link href="{% static 'home/css/live_map.css' %}" type="text/css" rel="stylesheet">
+        <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style>
+        h2 {
+            color: #5c5959;
+            text-transform: uppercase;
+            font-family: monospace;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="flex-row-header">
+            <div class="flex-col-header">
+                <h2>TriLocate</h2>
+            </div>
+            <div class="flex-col-header">
+                <img class="logo" src="{% static 'home/images/icfoss_logo.png' %}" />
+            </div>
+            <div class="flex-col-header">
+                <a href="/" class="a-view"><h3><i class="fa fa-sign-in" aria-hidden="true"></i> Home</h3></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="map"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- JQuery -->
+    <script src="{% static 'common/js/jquery-3.6.4.min.js' %}"></script>
+
+    <script>
+        let plotData_ = JSON.parse("{{map_data|escapejs}}");
+        console.log(plotData_);
+        // Create a Leaflet map instance
+        var map = L.map('map').setView([8.57055, 76.88478], 9);
+
+        // Add OpenStreetMap tile layer to the map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+        }).addTo(map);
+
+        /*
+        bus_name_id
+bus_stop_id
+bvoc"32.00000"
+co2
+humidity
+iaq
+latitude
+live_time
+longitude
+pressure
+temperature
+
+
+        */
+
+        for (let i = 0; i < plotData_.length; i++) {
+            var marker = L.marker([plotData_[i]['latitude'], plotData_[i]['longitude']]).addTo(map);
+            let label = "Last updated : ";
+            label = label + plotData_[i]['live_time'];
+            label = label + "<br><br>CO2";
+            label = label + plotData_[i]['co2'];
+            label = label + "<br>BVOC";
+            label = label + plotData_[i]['bvoc'];
+            label = label + "<br>IAQ";
+            label = label + plotData_[i]['iaq'];
+            label = label + "<br>Temperature";
+            label = label + plotData_[i]['temperature'];
+            label = label + "<br>Humidity";
+            label = label + plotData_[i]['humidity'];
+            label = label + "<br>Pressure";
+            label = label + plotData_[i]['Pressure'];
+
+            marker.bindPopup(label);
+        }
+
+    </script>
+</body>
+
+</html>

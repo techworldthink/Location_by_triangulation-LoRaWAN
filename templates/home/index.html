@@ -16,10 +16,11 @@
         background: url("{% static 'home/images/body-bg.jpg' %}");
         background-size: cover;
     }
-    .a-view{
+
+    .a-view {
         text-decoration: none;
-    color: #666666;
-    font-family: sans-serif;
+        color: #666666;
+        font-family: sans-serif;
     }
 </style>
 
@@ -28,13 +29,15 @@
         <div class="header">
             <div class="flex-row-header">
                 <div class="flex-col-header">
-                    <h2>AquaGauge</h2>
+                    <h2>TriLocate</h2>
                 </div>
                 <div class="flex-col-header">
                     <img class="logo" src="{% static 'home/images/icfoss_logo.png' %}" />
                 </div>
                 <div class="flex-col-header">
-                    <a href="/login" class="a-view"><h3><i class="fa fa-sign-in" aria-hidden="true"></i> Login</h3></a>
+                    <a href="/login" class="a-view">
+                        <h3><i class="fa fa-sign-in" aria-hidden="true"></i> Login</h3>
+                    </a>
                     <!-- <img class="logo" src="{% static 'home/images/lorawan.png' %}" /> -->
                 </div>
             </div>
@@ -44,7 +47,7 @@
                 <h1>LoRaWAN Triangulation</h1>
                 <h2>TriLocate</h2>
                 <p>Service for device location triangulation</p>
-                <a href="/graphs/" class="login-btn">View Data</a>
+                <a href="/live_map" class="login-btn">Live Map</a>
             </div>
         </div>
         <div class="footer">
@@ -54,7 +57,7 @@
                     <p>
                         Developed CDOH <br />
                         International Centre for Free and Open Source Software
-                      </p>
+                    </p>
                 </div>
                 <div class="flex-col-footer"></div>
             </div>

@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 
 
@@ -16,7 +17,8 @@ class BusStops(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
 
 class LiveData(models.Model):
-    device_name = models.CharField(max_length=100)
+    bus_name = models.ForeignKey(DeviceEui, on_delete=models.CASCADE,default=None)
+    bus_stop = models.ForeignKey(BusStops, on_delete=models.CASCADE,default=None)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     co2 = models.DecimalField(max_digits=9, decimal_places=5)
@@ -25,3 +27,5 @@ class LiveData(models.Model):
     temperature = models.DecimalField(max_digits=9, decimal_places=5)
     humidity = models.DecimalField(max_digits=9, decimal_places=5)
     pressure = models.DecimalField(max_digits=9, decimal_places=5)
+    live_time = models.DateTimeField(default=timezone.now)
+
