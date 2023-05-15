@@ -63,6 +63,22 @@ def device(request):
 
 @login_required()
 @user_passes_test(lambda u: u.is_superuser)
+def device_delete(request,id):
+    try:
+        device_obj = DeviceEui.objects.get(id=id)
+        device_obj.delete()
+        messages.success(request, "Device deleted")
+    except:
+        messages.success(request, "Device deletion failed")
+    
+    context = {
+        "devices" : DeviceEui.objects.filter()
+    }
+
+    return render(request, "admin/device.html",context)
+
+@login_required()
+@user_passes_test(lambda u: u.is_superuser)
 def bus_stops(request):
     if request.method == 'POST':
         stop_name = BusStops.objects.create(
@@ -75,3 +91,4 @@ def bus_stops(request):
         'stops' : json.dumps(list(BusStops.objects.filter().values()), indent=4, sort_keys=True, default=str)
     }
     return render(request, "admin/bus_stops.html",context)
+

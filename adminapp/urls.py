@@ -9,4 +9,5 @@ urlpatterns = [
     path('device',views.device,name='device'),
     path('bus_stops',views.bus_stops,name='bus_stops'), 
     path('dashboard',views.dashboard,name='dashboard'),
+    path('device/delete/<int:id>/',views.device_delete,name='device_delete'),
 ]

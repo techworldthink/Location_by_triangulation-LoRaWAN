@@ -7,7 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>School Form</title>
   <link href="{% static 'home/css/index.css' %}" type="text/css" rel="stylesheet" />
-
+    <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+   
   <style>
     /* Add some basic styling */
     body {
@@ -98,6 +100,10 @@
     th{
       color: #5c5959;;
     }
+    .delete-a{
+      text-decoration: none;
+      color: red;
+    }
   </style>
 </head>
 
@@ -133,7 +139,7 @@
         <tr>
           <td>{{each.bus_name}}</td>
           <td>{{each.device_eui}}</td>
-          <td>{{each.id}}</td>
+          <td><a class="delete-a" href="device/delete/{{each.id}}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
         </tr>
         {% endfor %}
       </tbody>
