@@ -71,10 +71,6 @@ def device_delete(request,id):
     except:
         messages.success(request, "Device deletion failed")
     
-    context = {
-        "devices" : DeviceEui.objects.filter()
-    }
-
     return redirect('device')
 
 @login_required()
@@ -87,8 +83,21 @@ def bus_stops(request):
             longitude=request.POST.get('lon'),
         )
         return JsonResponse({'status':'ok'})
+    bus_stops = BusStops.objects.filter().values()
     context = {
-        'stops' : json.dumps(list(BusStops.objects.filter().values()), indent=4, sort_keys=True, default=str)
+        'stops' : json.dumps(list(bus_stops), indent=4, sort_keys=True, default=str),
+        'bus_stops' : bus_stops
     }
     return render(request, "admin/bus_stops.html",context)
 
+
+@login_required()
+@user_passes_test(lambda u: u.is_superuser)
+def bus_stop_delete(request,id):
+    try:
+        bus_stop_obj = BusStops.objects.get(id=id)
+        bus_stop_obj.delete()
+        messages.success(request, "Bus stops deleted")
+    except:
+        messages.success(request, "Bus stop deletion failed")
+    return redirect('bus_stops')

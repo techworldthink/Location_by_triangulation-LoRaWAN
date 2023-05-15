@@ -6,6 +6,9 @@
 <head>
     <title>Bus Stops</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+    <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
     <style>
         #map {
             height: 400px;
@@ -16,6 +19,37 @@
             text-transform: uppercase;
             font-family: monospace;
         }
+
+        .inner-div {
+            background-color: #ffffff9e;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 90%;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            color: #4c4646;
+            text-align: center;
+            padding: 11px;
+            border-bottom: 1px solid #80808047;
+        }
+
+        th {
+            color: #5c5959;
+        }
+
+        .delete-a {
+            text-decoration: none;
+            color: red;
+        }
     </style>
 </head>
 
@@ -23,6 +57,35 @@
     <h2>Bus Stops</h2>
     <div id="map"></div>
 
+    <div class="form">
+        <div class="inner-div">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stop Name</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for each in bus_stops %}
+                    <tr>
+                        <td>{{each.stop_name}}</td>
+                        <td>{{each.latitude}}</td>
+                        <td>{{each.longitude}}</td>
+                        <td>
+                            <a class="delete-a" href="bus_stop/delete/{{each.id}}"><i class="fa fa-trash-o"
+                                    aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br /><br /><br />
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- JQuery -->
@@ -31,26 +94,25 @@
     <script>
         let plotData_ = JSON.parse("{{stops|escapejs}}");
         // Create a Leaflet map instance
-        var map = L.map('map').setView([8.57055, 76.88478], 9);
+        var map = L.map("map").setView([8.57055, 76.88478], 9);
 
         // Add OpenStreetMap tile layer to the map
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+                'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
             maxZoom: 18,
         }).addTo(map);
 
-
         for (let i = 0; i < plotData_.length; i++) {
-            var marker = L.marker([plotData_[i]['latitude'], plotData_[i]['longitude']]).addTo(map);
-            marker.bindPopup(plotData_[i]['stop_name']);
+            var marker = L.marker([
+                plotData_[i]["latitude"],
+                plotData_[i]["longitude"],
+            ]).addTo(map);
+            marker.bindPopup(plotData_[i]["stop_name"]);
         }
 
-
         function onMapClick(e) {
-            if (marker) {
-                //map.removeLayer(marker);
-            }
-            marker = L.marker(e.latlng,).addTo(map);
+            marker = L.marker(e.latlng).addTo(map);
             var latitude = e.latlng.lat;
             var longitude = e.latlng.lng;
             var status = confirm("Add this location?");
@@ -62,8 +124,7 @@
                 $.addBusStops(latitude, longitude, name_);
             }
         }
-        map.on('click', onMapClick);
-
+        map.on("click", onMapClick);
 
         $.addBusStops = function (lat, lon, name) {
             $.ajax({
@@ -73,16 +134,27 @@
                     lat: lat,
                     lon: lon,
                     stop_name: name,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
                 },
                 success: function (data) {
-                    status = data["status"];
-                    console.log(status);
+                    location.reload();
                 },
             });
         };
-
     </script>
+
+
+    <!--SNACKBAR MESAGE-->
+    <link href="{% static 'common/css/snackbar.css' %}" type="text/css" rel="stylesheet" />
+    <div id="snackbar"></div>
+    <script src="{% static 'common/js/snackbar.js' %}"></script>
+
+    {% for message in messages %}
+    <script>
+        showSnackBar("{{ message }}");
+    </script>
+    {% endfor %}
+
 </body>
 
 </html>

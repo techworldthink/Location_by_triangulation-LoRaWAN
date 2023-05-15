@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>School Form</title>
   <link href="{% static 'home/css/index.css' %}" type="text/css" rel="stylesheet" />
-    <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-   
+  <!--FONT AWESOME ICONS https://fontawesome.com/v4.7/icon/home-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
   <style>
     /* Add some basic styling */
     body {
@@ -17,7 +17,8 @@
       background-color: #f5f5f5;
     }
 
-    form,.inner-div {
+    form,
+    .inner-div {
       background-color: #ffffff9e;
       padding: 20px;
       margin: 20px auto;
@@ -87,20 +88,25 @@
       text-transform: uppercase;
       font-family: monospace;
     }
-    table{
+
+    table {
       width: 90%;
       border-collapse: collapse;
     }
-    td,th{
+
+    td,
+    th {
       color: #4c4646;
       text-align: center;
       padding: 11px;
       border-bottom: 1px solid #80808047;
     }
-    th{
-      color: #5c5959;;
+
+    th {
+      color: #5c5959;
     }
-    .delete-a{
+
+    .delete-a {
       text-decoration: none;
       color: red;
     }
@@ -108,48 +114,45 @@
 </head>
 
 <body>
-
-
   <div class="form">
     <form method="post" action="">
       <h2>Add Device</h2>
       <br /><br />
       {% csrf_token %}
       <label for="">Bus name</label>
-      <input type="text" name="bus_name" value="{{chirpstack_config.server_url}}" required>
+      <input type="text" name="bus_name" value="{{chirpstack_config.server_url}}" required />
       <label for="">Device EUI</label>
-      <input type="text" name="deveui" value="{{chirpstack_config.user_name}}" required>
+      <input type="text" name="deveui" value="{{chirpstack_config.user_name}}" required />
       <button type="submit">Submit</button>
-
     </form>
   </div>
 
   <div class="form">
     <div class="inner-div">
-    <table>
-      <thead>
-        <tr>
-          <th>Bus Name</th>
-          <th>Device EUI</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for each in devices %}
-        <tr>
-          <td>{{each.bus_name}}</td>
-          <td>{{each.device_eui}}</td>
-          <td><a class="delete-a" href="device/delete/{{each.id}}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Bus Name</th>
+            <th>Device EUI</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for each in devices %}
+          <tr>
+            <td>{{each.bus_name}}</td>
+            <td>{{each.device_eui}}</td>
+            <td>
+              <a class="delete-a" href="device/delete/{{each.id}}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <br><br><br>
-
-
+  <br /><br /><br />
 
   <!--SNACKBAR MESAGE-->
   <link href="{% static 'common/css/snackbar.css' %}" type="text/css" rel="stylesheet" />
