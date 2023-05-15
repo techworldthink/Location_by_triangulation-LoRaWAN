@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django .contrib import messages
@@ -75,7 +75,7 @@ def device_delete(request,id):
         "devices" : DeviceEui.objects.filter()
     }
 
-    return render(request, "admin/device.html",context)
+    return redirect('device')
 
 @login_required()
 @user_passes_test(lambda u: u.is_superuser)
