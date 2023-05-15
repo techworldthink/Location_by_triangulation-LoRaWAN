@@ -62,14 +62,27 @@ def get_received_gtw_count(rxInfo):
     return len(rxInfo)
 
 # decoder function
-def decode(bytes):
+# def decode(bytes):
+#     decoded = {}
+#     i = 0
+#     decoded["rainfall"] = (((bytes[i + 1] << 8) + bytes[i + 2]) * 0.2)
+#     decoded["total_rainfall_count"] = (((bytes[i + 3] << 8) + bytes[i + 4]) * 0.2)
+#     decoded["batteryLevel"] = ((bytes[i + 5] << 8) + bytes[i + 6])
+#     decoded["uv"] = ((bytes[i + 7] << 8) + bytes[i + 8])
+#     return decoded
+
+def decode(byte_array):
     decoded = {}
-    i = 0
-    decoded["rainfall"] = (((bytes[i + 1] << 8) + bytes[i + 2]) * 0.2)
-    decoded["total_rainfall_count"] = (((bytes[i + 3] << 8) + bytes[i + 4]) * 0.2)
-    decoded["batteryLevel"] = ((bytes[i + 5] << 8) + bytes[i + 6])
-    decoded["uv"] = ((bytes[i + 7] << 8) + bytes[i + 8])
+    decoded['IAQ'] = (byte_array[1] << 8) + byte_array[2]
+    decoded['Co2'] = (byte_array[3] << 8) + byte_array[4]
+    decoded['BVOC'] = (byte_array[5] << 24) + (byte_array[6] << 16) + (byte_array[7] << 8) + byte_array[8]
+    decoded['Temperature'] = byte_array[9]
+    decoded['Pressure'] = (byte_array[10] << 24) + (byte_array[11] << 16) + (byte_array[12] << 8) + byte_array[13]
+    decoded['Humidity'] = byte_array[14]
+    decoded['Gas_Resistance'] = (byte_array[15] << 24) + (byte_array[16] << 16) + (byte_array[17] << 8) + byte_array[18]
+    decoded['Bat_Level'] = (byte_array[19] << 8) + byte_array[20]
     return decoded
+
 
 
 # check the frame contain -  Unconfirmed up / Confirmed up / Join request data 
@@ -110,11 +123,11 @@ def get_up_data(json_data,device_eui):
                         timestamps.append(t_data[2])
                         locations.append([t_data[3],t_data[4]])
                     data = triangulate(timestamps,locations)
-                    print(data)
+                    return [data,decode(bytes_data_),device_eui]
                 else:
                     print("-NGTW CNT < 2-")
 
-                return [triangulation_data,decode(bytes_data_)]
+                return []
 
             
 

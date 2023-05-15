@@ -66,38 +66,23 @@
             maxZoom: 18,
         }).addTo(map);
 
-        /*
-        bus_name_id
-bus_stop_id
-bvoc"32.00000"
-co2
-humidity
-iaq
-latitude
-live_time
-longitude
-pressure
-temperature
-
-
-        */
 
         for (let i = 0; i < plotData_.length; i++) {
             var marker = L.marker([plotData_[i]['latitude'], plotData_[i]['longitude']]).addTo(map);
             let label = "Last updated : ";
             label = label + plotData_[i]['live_time'];
-            label = label + "<br><br>CO2";
+            label = label + "<br><br>CO2    :";
             label = label + plotData_[i]['co2'];
-            label = label + "<br>BVOC";
+            label = label + "<br>BVOC   : ";
             label = label + plotData_[i]['bvoc'];
-            label = label + "<br>IAQ";
+            label = label + "<br>IAQ    : ";
             label = label + plotData_[i]['iaq'];
-            label = label + "<br>Temperature";
+            label = label + "<br>Temperature    : ";
             label = label + plotData_[i]['temperature'];
-            label = label + "<br>Humidity";
+            label = label + "<br>Humidity   : ";
             label = label + plotData_[i]['humidity'];
-            label = label + "<br>Pressure";
-            label = label + plotData_[i]['Pressure'];
+            label = label + "<br>Pressure   : ";
+            label = label + plotData_[i]['pressure'];
 
             marker.bindPopup(label);
         }

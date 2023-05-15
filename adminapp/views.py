@@ -53,8 +53,13 @@ def device(request):
             device_eui=request.POST.get('deveui'),
         )
         messages.success(request, "Device added")
+    
+    context = {
+        "devices" : DeviceEui.objects.filter()
+    }
 
-    return render(request, "admin/device.html")
+    return render(request, "admin/device.html",context)
+
 
 @login_required()
 @user_passes_test(lambda u: u.is_superuser)

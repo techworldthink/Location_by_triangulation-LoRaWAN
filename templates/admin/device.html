@@ -15,7 +15,7 @@
       background-color: #f5f5f5;
     }
 
-    form {
+    form,.inner-div {
       background-color: #ffffff9e;
       padding: 20px;
       margin: 20px auto;
@@ -85,6 +85,19 @@
       text-transform: uppercase;
       font-family: monospace;
     }
+    table{
+      width: 90%;
+      border-collapse: collapse;
+    }
+    td,th{
+      color: #4c4646;
+      text-align: center;
+      padding: 11px;
+      border-bottom: 1px solid #80808047;
+    }
+    th{
+      color: #5c5959;;
+    }
   </style>
 </head>
 
@@ -104,6 +117,31 @@
 
     </form>
   </div>
+
+  <div class="form">
+    <div class="inner-div">
+    <table>
+      <thead>
+        <tr>
+          <th>Bus Name</th>
+          <th>Device EUI</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for each in devices %}
+        <tr>
+          <td>{{each.bus_name}}</td>
+          <td>{{each.device_eui}}</td>
+          <td>{{each.id}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <br><br><br>
 
 
 
