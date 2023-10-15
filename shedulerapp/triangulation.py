@@ -48,6 +48,7 @@ SPEED_OF_LIGHT = 299792458
 
 # Perform triangulation
 def triangulate(timestamps,locations):
+    print("--Triangulate")
     # convert timestamp to epoch format
     timestamps_epoch = [datetime_in_epoch(each) for each in timestamps]
     # find time of arrival of each pair of gateways
